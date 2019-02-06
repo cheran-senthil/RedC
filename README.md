@@ -1,0 +1,2 @@
+# RedC
+🌊 Competitive Programming Library
