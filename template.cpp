@@ -34,6 +34,16 @@ struct _vector : vector<T, Allocator> {
         return this->at(index);
     }
 
+    _vector& operator+=(const _vector& b) {
+        extend(b);
+        return *this;
+    }
+
+    friend _vector operator+(_vector a, _vector b) {
+        a.extend(b);
+        return a;
+    }
+
     void append(T x) { this->push_back(x); }
 
     int count(T x) { return std::count(this->begin(), this->end(), x); }
