@@ -24,6 +24,10 @@ struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::begin;
     using vector<T, Allocator>::end;
 
+    void insert(int index, T val) {
+        vector<T, Allocator>::insert(begin() + index, val);
+    }
+
     T pop() {
         T e = this->operator[](this->size() - 1);
         this->pop_back();
