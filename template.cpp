@@ -27,12 +27,12 @@ struct _vector : vector<T, Allocator> {
         return this->at(index);
     }
 
-    _vector& operator+=(const _vector& b) {
+    _vector &operator+=(const _vector &b) {
         extend(b);
         return *this;
     }
 
-    friend _vector operator+(_vector a, _vector b) {
+    friend _vector operator+(_vector a, const _vector &b) {
         a.extend(b);
         return a;
     }
@@ -46,7 +46,7 @@ struct _vector : vector<T, Allocator> {
         return a;
     }
 
-    template <class Container> void extend(Container iter) {
+    template <class Container> void extend(const Container &iter) {
         vector<T, Allocator>::insert(this->end(), iter.begin(), iter.end());
     }
 
