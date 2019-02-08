@@ -36,6 +36,24 @@ struct _vector : vector<T, Allocator> {
         return e;
     }
 
+    void sort() { std::sort(begin(), end()); }
+
+    template <typename F> void sort(F key) {
+        std::sort(begin(), end(),
+                  [=](const T a, const T b) { return key(a) < key(b); });
+    }
+
+    void sort(bool reverse) {
+        std::sort(begin(), end(),
+                  [=](const T a, const T b) { return reverse != (a < b); });
+    }
+
+    template <typename F> void sort(F key, bool reverse) {
+        std::sort(begin(), end(), [=](const T a, const T b) {
+            return reverse != (key(a) < key(b));
+        });
+    }
+
     void reverse() { std::reverse(begin(), end()); }
 };
 
