@@ -27,39 +27,27 @@ struct _vector : vector<T, Allocator> {
         return this->at(index);
     }
 
-    _vector &operator+=(const _vector &b) {
-        extend(b);
-        return *this;
-    }
-
     friend _vector operator+(_vector a, const _vector &b) {
         a.extend(b);
         return a;
     }
 
-    void append(T x) { this->push_back(x); }
-
-    int count(T x) { return std::count(this->begin(), this->end(), x); }
-
-    _vector copy() {
-        _vector a(*this);
-        return a;
+    _vector &operator+=(const _vector &b) {
+        extend(b);
+        return *this;
     }
+
+    void append(T x) { this->push_back(x); }
 
     template <class Container> void extend(const Container &iter) {
         vector<T, Allocator>::insert(this->end(), iter.begin(), iter.end());
     }
 
-    int index(T x) {
-        int index = find(this->begin(), this->end(), x) - this->begin();
-        if (index == this->size())
-            throw out_of_range("value is not in list");
-        return index;
-    }
-
     void insert(int index, T val) {
         vector<T, Allocator>::insert(this->begin() + index, val);
     }
+
+    void remove(T x) { this->erase(this->begin() + index(x)); }
 
     T pop() {
         T e = move(this->at(this->size() - 1));
@@ -75,7 +63,14 @@ struct _vector : vector<T, Allocator> {
         return e;
     }
 
-    void remove(T x) { this->erase(this->begin() + index(x)); }
+    int index(T x) {
+        int index = find(this->begin(), this->end(), x) - this->begin();
+        if (index == this->size())
+            throw out_of_range("value is not in list");
+        return index;
+    }
+
+    int count(T x) { return std::count(this->begin(), this->end(), x); }
 
     void sort() { std::sort(this->begin(), this->end()); }
 
@@ -99,6 +94,11 @@ struct _vector : vector<T, Allocator> {
     }
 
     void reverse() { std::reverse(this->begin(), this->end()); }
+
+    _vector copy() {
+        _vector a(*this);
+        return a;
+    }
 };
 
 #define vector _vector
