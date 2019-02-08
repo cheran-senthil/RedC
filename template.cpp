@@ -24,21 +24,23 @@ template <class T, int N> struct _array : array<T, N> {
     }
 
     void sort(bool reverse) {
-        if (reverse)
+        if (reverse) {
             std::sort(this->rbegin(), this->rend());
-        else
+        } else {
             std::sort(this->begin(), this->end());
+        }
     }
 
     template <typename F> void sort(F key, bool reverse) {
-        if (reverse)
+        if (reverse) {
             std::sort(
                 this->rbegin(), this->rend(),
                 [=](const T &x, const T &y) { return (key(x) < key(y)); });
-        else
+        } else {
             std::sort(this->begin(), this->end(), [=](const T &x, const T &y) {
                 return (key(x) < key(y));
             });
+        }
     }
 
     void reverse() { std::reverse(this->begin(), this->end()); }
@@ -54,14 +56,16 @@ struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::vector;
 
     T &operator[](int i) {
-        if (i < 0)
+        if (i < 0) {
             i += this->size();
+        }
         return this->at(i);
     }
 
     const T &operator[](int i) const {
-        if (i < 0)
+        if (i < 0) {
             i += this->size();
+        }
         return this->at(i);
     }
 
@@ -89,40 +93,47 @@ struct _vector : vector<T, Allocator> {
     void remove(const T &x) { this->erase(this->begin() + index(x)); }
 
     T pop(int i = -1) {
-        if (i < 0)
+        if (i < 0) {
             i += this->size();
+        }
 
         T x = move(this->at(i));
 
-        if (i == this->size() - 1)
+        if (i == this->size() - 1) {
             this->pop_back();
-        else
+        } else {
             this->erase(this->begin() + i);
+        }
 
         return x;
     }
 
     int index(const T &x, int start = 0) {
-        if (start < 0)
+        if (start < 0) {
             start += this->size();
+        }
 
         int i = find(this->begin() + start, this->end(), x) - this->begin();
-        if (i == this->size())
+        if (i == this->size()) {
             throw out_of_range("x not in range");
+        }
 
         return i;
     }
 
     int index(const T &x, int start, int end) {
-        if (start < 0)
+        if (start < 0) {
             start += this->size();
-        if (end < 0)
+        }
+        if (end < 0) {
             end += this->size();
+        }
 
         int i =
             find(this->begin() + start, this->begin() + end, x) - this->begin();
-        if (i == end)
+        if (i == end) {
             throw out_of_range("x not in range");
+        }
 
         return i;
     }
@@ -137,21 +148,23 @@ struct _vector : vector<T, Allocator> {
     }
 
     void sort(bool reverse) {
-        if (reverse)
+        if (reverse) {
             std::sort(this->rbegin(), this->rend());
-        else
+        } else {
             std::sort(this->begin(), this->end());
+        }
     }
 
     template <typename F> void sort(F key, bool reverse) {
-        if (reverse)
+        if (reverse) {
             std::sort(
                 this->rbegin(), this->rend(),
                 [=](const T &x, const T &y) { return (key(x) < key(y)); });
-        else
+        } else {
             std::sort(this->begin(), this->end(), [=](const T &x, const T &y) {
                 return (key(x) < key(y));
             });
+        }
     }
 
     void reverse() { std::reverse(this->begin(), this->end()); }
