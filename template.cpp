@@ -28,18 +28,18 @@ struct _vector : vector<T, Allocator> {
         return *this;
     }
 
-    void append(const T& x) { this->push_back(x); }
+    void append(const T &x) { this->push_back(x); }
 
     template <class Container> void extend(const Container &iterable) {
         vector<T, Allocator>::insert(this->end(), iterable.begin(),
                                      iterable.end());
     }
 
-    void insert(int i, const T& x) {
+    void insert(int i, const T &x) {
         vector<T, Allocator>::insert(this->begin() + i, x);
     }
 
-    void remove(const T& x) { this->erase(this->begin() + index(x)); }
+    void remove(const T &x) { this->erase(this->begin() + index(x)); }
 
     T pop(int i = -1) {
         if (i < 0)
@@ -55,7 +55,7 @@ struct _vector : vector<T, Allocator> {
         return x;
     }
 
-    int index(const T& x, int start = 0) {
+    int index(const T &x, int start = 0) {
         if (start < 0)
             start += this->size();
 
@@ -66,7 +66,7 @@ struct _vector : vector<T, Allocator> {
         return i;
     }
 
-    int index(const T& x, int start, int end) {
+    int index(const T &x, int start, int end) {
         if (start < 0)
             start += this->size();
         if (end < 0)
@@ -80,7 +80,7 @@ struct _vector : vector<T, Allocator> {
         return i;
     }
 
-    int count(const T& x) { return std::count(this->begin(), this->end(), x); }
+    int count(const T &x) { return std::count(this->begin(), this->end(), x); }
 
     void sort() { std::sort(this->begin(), this->end()); }
 
@@ -98,11 +98,13 @@ struct _vector : vector<T, Allocator> {
 
     template <typename F> void sort(F key, bool reverse) {
         if (reverse)
-            std::sort(this->rbegin(), this->rend(),
-                      [=](const T &x, const T &y) { return (key(x) < key(y)); });
+            std::sort(
+                this->rbegin(), this->rend(),
+                [=](const T &x, const T &y) { return (key(x) < key(y)); });
         else
-            std::sort(this->begin(), this->end(),
-                      [=](const T &x, const T &y) { return (key(x) < key(y)); });
+            std::sort(this->begin(), this->end(), [=](const T &x, const T &y) {
+                return (key(x) < key(y));
+            });
     }
 
     void reverse() { std::reverse(this->begin(), this->end()); }
