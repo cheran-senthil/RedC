@@ -45,6 +45,10 @@ struct _vector : vector<T, Allocator> {
         return a;
     }
 
+    template <class Container> void extend(Container iter) {
+        vector<T, Allocator>::insert(this->end(), iter.begin(), iter.end());
+    }
+
     int index(T x) {
         int index = find(begin(), end(), x) - begin();
         if (index == this->size())
