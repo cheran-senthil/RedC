@@ -1,16 +1,9 @@
 #include <bits/stdc++.h>
 
-using namespace std;
-
-#define all(v) all_of(v.begin(), v.end(), [](bool x) { return x; })
-#define any(v) any_of(v.begin(), v.end(), [](bool x) { return x; })
-#define dict map
-#define float long double
+#define complex complex<long double>
 #define int long long
-#define len(v) (v).size()
-#define reversed(v) reverse((v).begin(), (v).end())
-#define sorted(v) sort((v).begin(), (v).end())
-#define sum(v) accumulate((v).begin(), (v).end(), 0LL)
+#define float long double
+#define str string
 
 #define False false
 #define True true
@@ -110,17 +103,17 @@ struct _vector : vector<T, Allocator> {
 
 #define vector _vector
 
-string input() {
-    string s;
+using namespace std;
+
+str input() {
+    str s;
     getline(cin >> ws, s);
     return s;
-};
+}
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 main() {
     ios::sync_with_stdio(False);
     cin.tie(None);
-
-    return 0;
 }
