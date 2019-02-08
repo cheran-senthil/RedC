@@ -1,16 +1,5 @@
 #include <bits/stdc++.h>
 
-#define complex complex<long double>
-#define int long long
-#define float long double
-#define str string
-
-#define False false
-#define True true
-#define None nullptr
-
-#define main() signed main()
-
 using namespace std;
 
 template <class T, class Allocator = std::allocator<T>>
@@ -124,15 +113,26 @@ struct _vector : vector<T, Allocator> {
     }
 };
 
-#define vector _vector
-
-str input() {
-    str value;
+string input() {
+    string value;
     getline(cin >> ws, value);
     return value;
 }
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+#define vector _vector
+
+#define complex complex<long double>
+#define int long long
+#define float long double
+#define str string
+
+#define False false
+#define True true
+#define None nullptr
+
+#define main() signed main()
 
 main() {
     ios::sync_with_stdio(False);
