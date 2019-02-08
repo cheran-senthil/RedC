@@ -34,6 +34,13 @@ struct _vector : vector<T, Allocator> {
 
     int count(T x) { return std::count(begin(), end(), x); }
 
+    int index(T x) {
+        int index = find(begin(), end(), x) - begin();
+        if (index == this->size())
+            throw out_of_range("value is not in list");
+        return index;
+    }
+
     void insert(int index, T val) {
         vector<T, Allocator>::insert(begin() + index, val);
     }
