@@ -2,9 +2,8 @@
 
 using namespace std;
 
-template <class T, class Allocator = std::allocator<T>>
-struct _array : array<T, Allocator> {
-    using array<T, Allocator>::array;
+template <class T, int N> struct _array : array<T, N> {
+    using array<T, N>::array;
 
     int index(const T &x, int start = 0) {
         return find(this->begin() + start, this->end(), x) - this->begin();
