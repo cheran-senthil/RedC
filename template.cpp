@@ -23,6 +23,18 @@ struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::vector;
     using vector<T, Allocator>::begin;
     using vector<T, Allocator>::end;
+
+    T pop() {
+        T e = this->operator[](this->size() - 1);
+        this->pop_back();
+        return e;
+    }
+
+    T pop(int i) {
+        T e = this->operator[](i);
+        this->erase(begin() + i);
+        return e;
+    }
 };
 
 #define vector _vector
