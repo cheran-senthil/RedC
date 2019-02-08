@@ -32,6 +32,8 @@ struct _vector : vector<T, Allocator> {
 
     void append(T x) { this->push_back(x); }
 
+    int count(T x) { return std::count(begin(), end(), x); }
+
     void insert(int index, T val) {
         vector<T, Allocator>::insert(begin() + index, val);
     }
