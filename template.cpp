@@ -24,6 +24,12 @@ struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::begin;
     using vector<T, Allocator>::end;
 
+    T operator[](int index) {
+        if (index < 0)
+            index += this->size();
+        return vector<T, Allocator>::at(index);
+    }
+
     void append(T x) { this->push_back(x); }
 
     void insert(int index, T val) {
@@ -31,13 +37,15 @@ struct _vector : vector<T, Allocator> {
     }
 
     T pop() {
-        T e = this->operator[](this->size() - 1);
+        T e = this->at(this->size() - 1);
         this->pop_back();
         return e;
     }
 
     T pop(int i) {
-        T e = this->operator[](i);
+        if (i < 0)
+            i += this->size();
+        T e = this->at(i);
         this->erase(begin() + i);
         return e;
     }
