@@ -35,6 +35,8 @@ struct _vector : vector<T, Allocator> {
         this->erase(begin() + i);
         return e;
     }
+
+    void reverse() { std::reverse(begin(), end()); }
 };
 
 #define vector _vector
