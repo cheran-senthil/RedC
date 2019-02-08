@@ -6,13 +6,13 @@ template <class T, class Allocator = std::allocator<T>>
 struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::vector;
 
-    decltype(auto) operator[](int i) {
+    T &operator[](int i) {
         if (i < 0)
             i += this->size();
         return this->at(i);
     }
 
-    decltype(auto) operator[](int i) const {
+    const T &operator[](int i) const {
         if (i < 0)
             i += this->size();
         return this->at(i);
