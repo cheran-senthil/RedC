@@ -59,6 +59,8 @@ struct _vector : vector<T, Allocator> {
         return e;
     }
 
+    void remove(T x) { this->erase(begin() + index(x)); }
+
     void sort() { std::sort(begin(), end()); }
 
     template <typename F> void sort(F key) {
