@@ -59,7 +59,7 @@ struct _vector : vector<T, Allocator> {
     }
 
     T pop() {
-        T e = this->at(this->size() - 1);
+        T e = move(this->at(this->size() - 1));
         this->pop_back();
         return e;
     }
@@ -67,7 +67,7 @@ struct _vector : vector<T, Allocator> {
     T pop(int i) {
         if (i < 0)
             i += this->size();
-        T e = this->at(i);
+        T e = move(this->at(i));
         this->erase(this->begin() + i);
         return e;
     }
