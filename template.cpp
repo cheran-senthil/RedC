@@ -8,7 +8,6 @@ using namespace std;
 #define float long double
 #define int long long
 #define len(v) (v).size()
-#define list vector
 #define reversed(v) reverse((v).begin(), (v).end())
 #define sorted(v) sort((v).begin(), (v).end())
 #define sum(v) accumulate((v).begin(), (v).end(), 0LL)
@@ -18,6 +17,15 @@ using namespace std;
 #define None nullptr
 
 #define main() signed main()
+
+template <class T, class Allocator = std::allocator<T>>
+struct _vector : vector<T, Allocator> {
+    using vector<T, Allocator>::vector;
+    using vector<T, Allocator>::begin;
+    using vector<T, Allocator>::end;
+};
+
+#define vector _vector
 
 string input() {
     string s;
