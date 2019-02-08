@@ -24,7 +24,13 @@ struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::begin;
     using vector<T, Allocator>::end;
 
-    T operator[](int index) {
+    decltype(auto) operator[](int index) {
+        if (index < 0)
+            index += this->size();
+        return vector<T, Allocator>::at(index);
+    }
+
+    decltype(auto) operator[](int index) const {
         if (index < 0)
             index += this->size();
         return vector<T, Allocator>::at(index);
