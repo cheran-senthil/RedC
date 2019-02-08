@@ -11,6 +11,8 @@
 
 #define main() signed main()
 
+using namespace std;
+
 template <class T, class Allocator = std::allocator<T>>
 struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::vector;
@@ -66,7 +68,7 @@ struct _vector : vector<T, Allocator> {
     int index(T x) {
         int index = find(this->begin(), this->end(), x) - this->begin();
         if (index == this->size())
-            throw out_of_range("value is not in list");
+            throw out_of_range("x not in list");
         return index;
     }
 
@@ -103,8 +105,6 @@ struct _vector : vector<T, Allocator> {
 
 #define vector _vector
 
-using namespace std;
-
 str input() {
     str s;
     getline(cin >> ws, s);
@@ -116,4 +116,7 @@ mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 main() {
     ios::sync_with_stdio(False);
     cin.tie(None);
+    vector<int> a(1);
+    a[0] = 1;
+    cout << a[0];
 }
