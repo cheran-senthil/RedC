@@ -3,6 +3,54 @@
 using namespace std;
 
 template <class T, class Allocator = std::allocator<T>>
+struct _array : array<T, Allocator> {
+    using array<T, Allocator>::array;
+
+    int index(const T &x, int start = 0) {
+        return find(this->begin() + start, this->end(), x) - this->begin();
+    }
+
+    int index(const T &x, int start, int end) {
+        return find(this->begin() + start, this->begin() + end, x) -
+               this->begin();
+    }
+
+    int count(const T &x) { return std::count(this->begin(), this->end(), x); }
+
+    void sort() { std::sort(this->begin(), this->end()); }
+
+    template <typename F> void sort(F key) {
+        std::sort(this->begin(), this->end(),
+                  [=](const T &x, const T &y) { return key(x) < key(y); });
+    }
+
+    void sort(bool reverse) {
+        if (reverse)
+            std::sort(this->rbegin(), this->rend());
+        else
+            std::sort(this->begin(), this->end());
+    }
+
+    template <typename F> void sort(F key, bool reverse) {
+        if (reverse)
+            std::sort(
+                this->rbegin(), this->rend(),
+                [=](const T &x, const T &y) { return (key(x) < key(y)); });
+        else
+            std::sort(this->begin(), this->end(), [=](const T &x, const T &y) {
+                return (key(x) < key(y));
+            });
+    }
+
+    void reverse() { std::reverse(this->begin(), this->end()); }
+
+    _array copy() {
+        _array a(*this);
+        return a;
+    }
+};
+
+template <class T, class Allocator = std::allocator<T>>
 struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::vector;
 
@@ -123,6 +171,7 @@ string input() {
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
+#define array _array
 #define vector _vector
 
 #define complex complex<long double>
