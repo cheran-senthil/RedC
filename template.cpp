@@ -21,24 +21,22 @@ using namespace std;
 template <class T, class Allocator = std::allocator<T>>
 struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::vector;
-    using vector<T, Allocator>::begin;
-    using vector<T, Allocator>::end;
 
     decltype(auto) operator[](int index) {
         if (index < 0)
             index += this->size();
-        return vector<T, Allocator>::at(index);
+        return this->at(index);
     }
 
     decltype(auto) operator[](int index) const {
         if (index < 0)
             index += this->size();
-        return vector<T, Allocator>::at(index);
+        return this->at(index);
     }
 
     void append(T x) { this->push_back(x); }
 
-    int count(T x) { return std::count(begin(), end(), x); }
+    int count(T x) { return std::count(this->begin(), this->end(), x); }
 
     _vector copy() {
         _vector a(*this);
@@ -50,14 +48,14 @@ struct _vector : vector<T, Allocator> {
     }
 
     int index(T x) {
-        int index = find(begin(), end(), x) - begin();
+        int index = find(this->begin(), this->end(), x) - this->begin();
         if (index == this->size())
             throw out_of_range("value is not in list");
         return index;
     }
 
     void insert(int index, T val) {
-        vector<T, Allocator>::insert(begin() + index, val);
+        vector<T, Allocator>::insert(this->begin() + index, val);
     }
 
     T pop() {
@@ -70,31 +68,34 @@ struct _vector : vector<T, Allocator> {
         if (i < 0)
             i += this->size();
         T e = this->at(i);
-        this->erase(begin() + i);
+        this->erase(this->begin() + i);
         return e;
     }
 
-    void remove(T x) { this->erase(begin() + index(x)); }
+    void remove(T x) { this->erase(this->begin() + index(x)); }
 
-    void sort() { std::sort(begin(), end()); }
+    void sort() { std::sort(this->begin(), this->end()); }
 
     template <typename F> void sort(F key) {
-        std::sort(begin(), end(),
+        std::sort(this->begin(), this->end(),
                   [=](const T a, const T b) { return key(a) < key(b); });
     }
 
     void sort(bool reverse) {
-        std::sort(begin(), end(),
-                  [=](const T a, const T b) { return reverse != (a < b); });
+        if (reverse)
+            std::sort(this->rbegin(), this->rend());
+        std::sort(this->begin(), this->end());
     }
 
     template <typename F> void sort(F key, bool reverse) {
-        std::sort(begin(), end(), [=](const T a, const T b) {
-            return reverse != (key(a) < key(b));
-        });
+        if (reverse)
+            std::sort(this->rbegin(), this->rend(),
+                      [=](const T a, const T b) { return (key(a) < key(b)); });
+        std::sort(this->begin(), this->end(),
+                  [=](const T a, const T b) { return (key(a) < key(b)); });
     }
 
-    void reverse() { std::reverse(begin(), end()); }
+    void reverse() { std::reverse(this->begin(), this->end()); }
 };
 
 #define vector _vector
