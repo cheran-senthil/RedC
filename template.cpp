@@ -66,9 +66,25 @@ struct _vector : vector<T, Allocator> {
         return x;
     }
 
-    int index(T x) {
-        int i = find(this->begin(), this->end(), x) - this->begin();
+    int index(T x, int start = 0) {
+        if (start < 0)
+            start += this->size();
+
+        int i = find(this->begin() + start, this->end(), x) - this->begin();
         if (i == this->size())
+            throw out_of_range("x not in list");
+        return i;
+    }
+
+    int index(T x, int start, int end) {
+        if (start < 0)
+            start += this->size();
+        if (end < 0)
+            end += this->size();
+
+        int i =
+            find(this->begin() + start, this->begin() + end, x) - this->begin();
+        if (i == end)
             throw out_of_range("x not in list");
         return i;
     }
