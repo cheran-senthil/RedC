@@ -34,6 +34,11 @@ struct _vector : vector<T, Allocator> {
 
     int count(T x) { return std::count(begin(), end(), x); }
 
+    _vector copy() {
+        _vector a(*this);
+        return a;
+    }
+
     int index(T x) {
         int index = find(begin(), end(), x) - begin();
         if (index == this->size())
