@@ -34,8 +34,8 @@ struct _vector : vector<T, Allocator> {
         return a;
     }
 
-    _vector &operator+=(const _vector &b) {
-        extend(b);
+    _vector &operator+=(const _vector &a) {
+        extend(a);
         return *this;
     }
 
@@ -52,17 +52,17 @@ struct _vector : vector<T, Allocator> {
 
     void remove(T x) { this->erase(this->begin() + index(x)); }
 
-    T pop() {
-        T x = move(this->at(this->size() - 1));
-        this->pop_back();
-        return x;
-    }
-
-    T pop(int i) {
+    T pop(int i = -1) {
         if (i < 0)
             i += this->size();
+
         T x = move(this->at(i));
-        this->erase(this->begin() + i);
+
+        if (i == this->size() - 1)
+            this->pop_back();
+        else
+            this->erase(this->begin() + i);
+
         return x;
     }
 
@@ -73,6 +73,7 @@ struct _vector : vector<T, Allocator> {
         int i = find(this->begin() + start, this->end(), x) - this->begin();
         if (i == this->size())
             throw out_of_range("x not in list");
+
         return i;
     }
 
@@ -86,6 +87,7 @@ struct _vector : vector<T, Allocator> {
             find(this->begin() + start, this->begin() + end, x) - this->begin();
         if (i == end)
             throw out_of_range("x not in list");
+
         return i;
     }
 
@@ -101,15 +103,17 @@ struct _vector : vector<T, Allocator> {
     void sort(bool reverse) {
         if (reverse)
             std::sort(this->rbegin(), this->rend());
-        std::sort(this->begin(), this->end());
+        else
+            std::sort(this->begin(), this->end());
     }
 
     template <typename F> void sort(F key, bool reverse) {
         if (reverse)
             std::sort(this->rbegin(), this->rend(),
                       [=](const T x, const T y) { return (key(x) < key(y)); });
-        std::sort(this->begin(), this->end(),
-                  [=](const T x, const T y) { return (key(x) < key(y)); });
+        else
+            std::sort(this->begin(), this->end(),
+                      [=](const T x, const T y) { return (key(x) < key(y)); });
     }
 
     void reverse() { std::reverse(this->begin(), this->end()); }
