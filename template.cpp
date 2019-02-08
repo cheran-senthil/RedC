@@ -24,6 +24,8 @@ struct _vector : vector<T, Allocator> {
     using vector<T, Allocator>::begin;
     using vector<T, Allocator>::end;
 
+    void append(T x) { this->push_back(x); }
+
     void insert(int index, T val) {
         vector<T, Allocator>::insert(begin() + index, val);
     }
