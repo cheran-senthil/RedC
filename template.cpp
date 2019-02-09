@@ -263,13 +263,13 @@ struct _map : std::map<Key, T, Compare, Alloc> {
     }
 
     _vector<Key> keys() {
-        _vector<Key> k;
+        _vector<Key> a;
 
         std::transform(
-            this->begin(), this->end(), std::back_inserter(k),
+            this->begin(), this->end(), std::back_inserter(a),
             [](const std::pair<const Key, T> &item) { return item.first; });
 
-        return k;
+        return a;
     }
 
     T pop(Key key) {
