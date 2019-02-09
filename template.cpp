@@ -86,7 +86,7 @@ struct _vector : std::vector<T, Allocator> {
             i += this->size();
         }
 
-        T x = move(this->at(i));
+        T x = std::move(this->at(i));
 
         if (i == this->size() - 1) {
             this->pop_back();
