@@ -307,6 +307,16 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         this->insert(this->begin(), std::pair<Key, T>(key, d));
         return d;
     }
+
+    _vector<Key> values() {
+        _vector<Key> k;
+
+        std::transform(
+            this->begin(), this->end(), std::back_inserter(k),
+            [](const std::pair<const Key, T> &item) { return item.second; });
+
+        return k;
+    }
 };
 
 using namespace std;
