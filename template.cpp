@@ -200,6 +200,78 @@ struct _vector : std::vector<T, Alloc> {
     }
 };
 
+template <class Key, class T, class Compare = std::less<Key>,
+          class Alloc = std::allocator<std::pair<const Key, T>>>
+struct _map : std::map<Key, T, Compare, Alloc> {
+    using std::map<Key, T, Compare, Alloc>::map;
+
+    _map copy() {
+        _map a = *this;
+        return a;
+    }
+
+    T get(Key key, T d = T()) {
+        if (this->count(key)) {
+            return this->at(key);
+        }
+        return d;
+    }
+
+    _vector<std::pair<const Key, T>> items() {
+        _vector<std::pair<const Key, T>> a(this->begin(), this->end());
+        return a;
+    }
+
+    _vector<Key> keys() {
+        _vector<Key> a;
+
+        std::transform(
+            this->begin(), this->end(), std::back_inserter(a),
+            [](const std::pair<const Key, T> &item) { return item.first; });
+
+        return a;
+    }
+
+    T pop(Key key) {
+        if (this->count(key)) {
+            T x = std::move(this->at(key));
+            this->erase(key);
+            return x;
+        }
+
+        throw std::out_of_range("key not in dict");
+    }
+
+    T pop(Key key, T d) {
+        if (this->count(key)) {
+            T x = std::move(this->at(key));
+            this->erase(key);
+            return x;
+        }
+
+        return d;
+    }
+
+    T setdefault(Key key, T d = T()) {
+        if (this->count(key)) {
+            return this->at(key);
+        }
+
+        this->insert(this->begin(), std::pair<Key, T>(key, d));
+        return d;
+    }
+
+    _vector<Key> values() {
+        _vector<Key> k;
+
+        std::transform(
+            this->begin(), this->end(), std::back_inserter(k),
+            [](const std::pair<const Key, T> &item) { return item.second; });
+
+        return k;
+    }
+};
+
 using namespace std;
 
 string input() {
@@ -211,6 +283,7 @@ string input() {
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 #define deque _deque
+#define map _map
 #define vector _vector
 
 #define complex complex<long double>
