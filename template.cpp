@@ -127,7 +127,12 @@ struct _deque : std::deque<T, Alloc> {
 
     void reverse() { std::reverse(this->begin(), this->end()); }
 
-    void rotate(int n = 1) {}
+    void rotate(int n = 1) {
+        if (n < 0) {
+            n += this->size();
+        }
+        std::rotate(this->begin(), this->end() - n, this->end());
+    }
 };
 
 template <class T, class Alloc = std::allocator<T>>
