@@ -240,6 +240,12 @@ struct _vector : std::vector<T, Alloc> {
     }
 };
 
+template <class Key, class T, class Compare = std::less<Key>,
+          class Alloc = std::allocator<std::pair<const Key, T>>>
+struct _map : std::map<Key, T, Compare, Alloc> {
+    using std::map<Key, T, Compare, Alloc>::map;
+};
+
 using namespace std;
 
 string input() {
