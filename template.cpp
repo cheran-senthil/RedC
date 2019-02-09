@@ -244,6 +244,11 @@ template <class Key, class T, class Compare = std::less<Key>,
           class Alloc = std::allocator<std::pair<const Key, T>>>
 struct _map : std::map<Key, T, Compare, Alloc> {
     using std::map<Key, T, Compare, Alloc>::map;
+
+    _map copy() {
+        _map a = *this;
+        return a;
+    }
 };
 
 using namespace std;
