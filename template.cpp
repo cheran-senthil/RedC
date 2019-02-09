@@ -258,6 +258,26 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         }
         return d;
     }
+
+    T pop(Key key) {
+        if (this->count(key)) {
+            T x = std::move(this->at(key));
+            this->erase(key);
+            return x;
+        }
+
+        throw std::out_of_range("key not in dict");
+    }
+
+    T pop(Key key, T d) {
+        if (this->count(key)) {
+            T x = std::move(this->at(key));
+            this->erase(key);
+            return x;
+        }
+
+        return d;
+    }
 };
 
 using namespace std;
