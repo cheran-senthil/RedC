@@ -258,6 +258,11 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         }
         return d;
     }
+    
+    _vector<std::pair<const Key, T>> items() {
+        _vector<std::pair<const Key, T>> a(this->begin(), this->end());
+        return a;
+    }
 
     T pop(Key key) {
         if (this->count(key)) {
