@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 
 template <class T, int N> struct _array : std::array<T, N> {
-    using std::array<T, N>::array;
-
     int index(const T &x, int start = 0) {
         return std::find(this->begin() + start, this->end(), x) - this->begin();
     }
