@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 
 template <class T, int N> struct _array : std::array<T, N> {
-    int index(const T &x, int start = 0) {
-        return std::find(this->begin() + start, this->end(), x) - this->begin();
-    }
+    int index(const T &x, int start = 0, int end = 0) {
+        if (end == 0) {
+            end = this->size();
+        }
 
-    int index(const T &x, int start, int end) {
         return std::find(this->begin() + start, this->begin() + end, x) -
                this->begin();
     }
@@ -97,26 +97,11 @@ struct _vector : std::vector<T, Allocator> {
         return x;
     }
 
-    int index(const T &x, int start = 0) {
+    int index(const T &x, int start = 0, int end = 0) {
         if (start < 0) {
             start += this->size();
         }
-
-        int i =
-            std::find(this->begin() + start, this->end(), x) - this->begin();
-
-        if (i == this->size()) {
-            throw std::out_of_range("x not in range");
-        }
-
-        return i;
-    }
-
-    int index(const T &x, int start, int end) {
-        if (start < 0) {
-            start += this->size();
-        }
-        if (end < 0) {
+        if (end <= 0) {
             end += this->size();
         }
 
