@@ -1,45 +1,5 @@
 #include <bits/stdc++.h>
 
-template <class T, int N> struct _array : std::array<T, N> {
-    int index(const T &x, int start = 0, int end = 0) {
-        if (end == 0) {
-            end = this->size();
-        }
-
-        return std::find(this->begin() + start, this->begin() + end, x) -
-               this->begin();
-    }
-
-    int count(const T &x) { return std::count(this->begin(), this->end(), x); }
-
-    void sort(bool reverse = false) {
-        if (reverse) {
-            std::sort(this->rbegin(), this->rend());
-        } else {
-            std::sort(this->begin(), this->end());
-        }
-    }
-
-    template <typename F> void sort(F key, bool reverse = false) {
-        if (reverse) {
-            std::sort(
-                this->rbegin(), this->rend(),
-                [key](const T &x, const T &y) { return (key(x) < key(y)); });
-        } else {
-            std::sort(
-                this->begin(), this->end(),
-                [key](const T &x, const T &y) { return (key(x) < key(y)); });
-        }
-    }
-
-    void reverse() { std::reverse(this->begin(), this->end()); }
-
-    _array copy() {
-        _array a(*this);
-        return a;
-    }
-};
-
 template <class T, class Alloc = std::allocator<T>>
 struct _deque : std::deque<T, Alloc> {
     using std::deque<T, Alloc>::deque;
@@ -250,7 +210,6 @@ string input() {
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
-#define array _array
 #define deque _deque
 #define vector _vector
 
