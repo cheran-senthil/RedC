@@ -250,9 +250,7 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         return a;
     }
 
-    T get(Key key) { this->at(key); }
-
-    T get(Key key, T d) {
+    T get(Key key, T d = T()) {
         if (this->count(key)) {
             return this->at(key);
         }
