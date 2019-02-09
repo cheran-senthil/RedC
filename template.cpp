@@ -249,6 +249,15 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         _map a = *this;
         return a;
     }
+
+    T get(Key key) { this->at(key); }
+
+    T get(Key key, T d) {
+        if (this->count(key)) {
+            return this->at(key);
+        }
+        return d;
+    }
 };
 
 using namespace std;
