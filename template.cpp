@@ -1,29 +1,20 @@
 #include <bits/stdc++.h>
 
-using namespace std;
-
-template <class T, int N> struct _array : array<T, N> {
-    using array<T, N>::array;
+template <class T, int N> struct _array : std::array<T, N> {
+    using std::array<T, N>::array;
 
     int index(const T &x, int start = 0) {
-        return find(this->begin() + start, this->end(), x) - this->begin();
+        return std::find(this->begin() + start, this->end(), x) - this->begin();
     }
 
     int index(const T &x, int start, int end) {
-        return find(this->begin() + start, this->begin() + end, x) -
+        return std::find(this->begin() + start, this->begin() + end, x) -
                this->begin();
     }
 
     int count(const T &x) { return std::count(this->begin(), this->end(), x); }
 
-    void sort() { std::sort(this->begin(), this->end()); }
-
-    template <typename F> void sort(F key) {
-        std::sort(this->begin(), this->end(),
-                  [=](const T &x, const T &y) { return key(x) < key(y); });
-    }
-
-    void sort(bool reverse) {
+    void sort(bool reverse = false) {
         if (reverse) {
             std::sort(this->rbegin(), this->rend());
         } else {
@@ -31,15 +22,15 @@ template <class T, int N> struct _array : array<T, N> {
         }
     }
 
-    template <typename F> void sort(F key, bool reverse) {
+    template <typename F> void sort(F key, bool reverse = false) {
         if (reverse) {
             std::sort(
                 this->rbegin(), this->rend(),
-                [=](const T &x, const T &y) { return (key(x) < key(y)); });
+                [key](const T &x, const T &y) { return (key(x) < key(y)); });
         } else {
-            std::sort(this->begin(), this->end(), [=](const T &x, const T &y) {
-                return (key(x) < key(y));
-            });
+            std::sort(
+                this->begin(), this->end(),
+                [key](const T &x, const T &y) { return (key(x) < key(y)); });
         }
     }
 
@@ -52,8 +43,8 @@ template <class T, int N> struct _array : array<T, N> {
 };
 
 template <class T, class Allocator = std::allocator<T>>
-struct _vector : vector<T, Allocator> {
-    using vector<T, Allocator>::vector;
+struct _vector : std::vector<T, Allocator> {
+    using std::vector<T, Allocator>::vector;
 
     T &operator[](int i) {
         if (i < 0) {
@@ -82,12 +73,12 @@ struct _vector : vector<T, Allocator> {
     void append(const T &x) { this->push_back(x); }
 
     template <class Container> void extend(const Container &iterable) {
-        vector<T, Allocator>::insert(this->end(), iterable.begin(),
-                                     iterable.end());
+        std::vector<T, Allocator>::insert(this->end(), iterable.begin(),
+                                          iterable.end());
     }
 
     void insert(int i, const T &x) {
-        vector<T, Allocator>::insert(this->begin() + i, x);
+        std::vector<T, Allocator>::insert(this->begin() + i, x);
     }
 
     void remove(const T &x) { this->erase(this->begin() + index(x)); }
@@ -113,9 +104,11 @@ struct _vector : vector<T, Allocator> {
             start += this->size();
         }
 
-        int i = find(this->begin() + start, this->end(), x) - this->begin();
+        int i =
+            std::find(this->begin() + start, this->end(), x) - this->begin();
+
         if (i == this->size()) {
-            throw out_of_range("x not in range");
+            throw std::out_of_range("x not in range");
         }
 
         return i;
@@ -129,10 +122,11 @@ struct _vector : vector<T, Allocator> {
             end += this->size();
         }
 
-        int i =
-            find(this->begin() + start, this->begin() + end, x) - this->begin();
+        int i = std::find(this->begin() + start, this->begin() + end, x) -
+                this->begin();
+
         if (i == end) {
-            throw out_of_range("x not in range");
+            throw std::out_of_range("x not in range");
         }
 
         return i;
@@ -140,14 +134,7 @@ struct _vector : vector<T, Allocator> {
 
     int count(const T &x) { return std::count(this->begin(), this->end(), x); }
 
-    void sort() { std::sort(this->begin(), this->end()); }
-
-    template <typename F> void sort(F key) {
-        std::sort(this->begin(), this->end(),
-                  [=](const T &x, const T &y) { return key(x) < key(y); });
-    }
-
-    void sort(bool reverse) {
+    void sort(bool reverse = false) {
         if (reverse) {
             std::sort(this->rbegin(), this->rend());
         } else {
@@ -155,15 +142,15 @@ struct _vector : vector<T, Allocator> {
         }
     }
 
-    template <typename F> void sort(F key, bool reverse) {
+    template <typename F> void sort(F key, bool reverse = false) {
         if (reverse) {
             std::sort(
                 this->rbegin(), this->rend(),
-                [=](const T &x, const T &y) { return (key(x) < key(y)); });
+                [key](const T &x, const T &y) { return (key(x) < key(y)); });
         } else {
-            std::sort(this->begin(), this->end(), [=](const T &x, const T &y) {
-                return (key(x) < key(y));
-            });
+            std::sort(
+                this->begin(), this->end(),
+                [key](const T &x, const T &y) { return (key(x) < key(y)); });
         }
     }
 
@@ -174,6 +161,8 @@ struct _vector : vector<T, Allocator> {
         return a;
     }
 };
+
+using namespace std;
 
 string input() {
     string value;
