@@ -258,10 +258,20 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         }
         return d;
     }
-    
+
     _vector<std::pair<const Key, T>> items() {
         _vector<std::pair<const Key, T>> a(this->begin(), this->end());
         return a;
+    }
+
+    _vector<Key> keys() {
+        _vector<Key> k;
+
+        std::transform(
+            this->begin(), this->end(), std::back_inserter(k),
+            [](const std::pair<const Key, T> &item) { return item.first; });
+
+        return k;
     }
 
     T pop(Key key) {
