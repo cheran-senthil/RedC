@@ -294,12 +294,7 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         return d;
     }
 
-    T setdefault(Key key) {
-        this->insert(this->begin(), std::pair<Key, T>(key, this->at(key)));
-        return this->at(key);
-    }
-
-    T setdefault(Key key, T d) {
+    T setdefault(Key key, T d = T()) {
         if (this->count(key)) {
             return this->at(key);
         }
