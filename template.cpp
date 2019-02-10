@@ -276,6 +276,8 @@ template <class T, class Compare = std::less<T>,
           class Alloc = std::allocator<T>>
 struct _set : std::set<T, Compare, Alloc> {
     using std::set<T, Compare, Alloc>::set;
+
+    void add(T elem) { this->insert(elem); }
 };
 
 using namespace std;
