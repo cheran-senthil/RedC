@@ -272,6 +272,12 @@ struct _map : std::map<Key, T, Compare, Alloc> {
     }
 };
 
+template <class T, class Compare = std::less<T>,
+          class Alloc = std::allocator<T>>
+struct _set : std::set<T, Compare, Alloc> {
+    using std::set<T, Compare, Alloc>::set;
+};
+
 using namespace std;
 
 string input() {
