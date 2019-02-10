@@ -281,6 +281,11 @@ struct _set : std::set<T, Compare, Alloc> {
 
     void discard(const T &elem) { this->erase(elem); }
 
+    bool issubset(_set<T> &other) {
+        return std::includes(other.begin(), other.end(), this->begin(),
+                             this->end());
+    }
+
     void remove(const T &elem) {
         if (this->count(elem)) {
             this->erase(elem);
