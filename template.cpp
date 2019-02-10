@@ -277,11 +277,11 @@ template <class T, class Compare = std::less<T>,
 struct _set : std::set<T, Compare, Alloc> {
     using std::set<T, Compare, Alloc>::set;
 
-    void add(T elem) { this->insert(elem); }
+    void add(const T &elem) { this->insert(elem); }
 
-    void discard(T elem) { this->erase(elem); }
+    void discard(const T &elem) { this->erase(elem); }
 
-    void remove(T elem) {
+    void remove(const T &elem) {
         if (this->count(elem)) {
             this->erase(elem);
         } else {
@@ -318,13 +318,4 @@ mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 main() {
     ios::sync_with_stdio(False);
     cin.tie(None);
-
-    _set<int> a;
-
-    a.add(1);
-
-    for (auto i : a) {
-        cout << i << ' ';
-    }
-    cout << endl;
 }
