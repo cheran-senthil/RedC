@@ -286,6 +286,11 @@ struct _set : std::set<T, Compare, Alloc> {
                              this->end());
     }
 
+    bool issuperset(_set<T> &other) {
+        return std::includes(this->begin(), this->end(), other->begin(),
+                             other->end());
+    }
+
     void remove(const T &elem) {
         if (this->count(elem)) {
             this->erase(elem);
