@@ -280,6 +280,14 @@ struct _set : std::set<T, Compare, Alloc> {
     void add(T elem) { this->insert(elem); }
 
     void discard(T elem) { this->erase(elem); }
+
+    void remove(T elem) {
+        if (this->count(elem)) {
+            this->erase(elem);
+        } else {
+            throw std::out_of_range("elem not in set");
+        }
+    }
 };
 
 using namespace std;
