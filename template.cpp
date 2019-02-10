@@ -278,6 +278,8 @@ struct _set : std::set<T, Compare, Alloc> {
     using std::set<T, Compare, Alloc>::set;
 
     void add(T elem) { this->insert(elem); }
+
+    void discard(T elem) { this->erase(elem); }
 };
 
 using namespace std;
@@ -308,4 +310,13 @@ mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 main() {
     ios::sync_with_stdio(False);
     cin.tie(None);
+
+    _set<int> a;
+
+    a.add(1);
+
+    for (auto i : a) {
+        cout << i << ' ';
+    }
+    cout << endl;
 }
