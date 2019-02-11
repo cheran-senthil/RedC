@@ -211,9 +211,13 @@ struct _map : std::map<Key, T, Compare, Alloc> {
     }
 
     T get(const Key &key, const T &d = T()) {
-        if (this->count(key)) {
-            return this->at(key);
+        typename std::map<Key, T, Compare, Alloc>::iterator it =
+            this->find(key);
+
+        if (it != this->end()) {
+            return it->second;
         }
+
         return d;
     }
 
@@ -233,9 +237,12 @@ struct _map : std::map<Key, T, Compare, Alloc> {
     }
 
     T pop(const Key &key) {
-        if (this->count(key)) {
-            T x = std::move(this->at(key));
-            this->erase(key);
+        typename std::map<Key, T, Compare, Alloc>::iterator it =
+            this->find(key);
+
+        if (it != this->end()) {
+            T x = std::move(it->second);
+            erase(it);
             return x;
         }
 
@@ -243,9 +250,12 @@ struct _map : std::map<Key, T, Compare, Alloc> {
     }
 
     T pop(const Key &key, const T &d) {
-        if (this->count(key)) {
-            T x = std::move(this->at(key));
-            this->erase(key);
+        typename std::map<Key, T, Compare, Alloc>::iterator it =
+            this->find(key);
+
+        if (it != this->end()) {
+            T x = std::move(it->second);
+            erase(it);
             return x;
         }
 
@@ -253,8 +263,11 @@ struct _map : std::map<Key, T, Compare, Alloc> {
     }
 
     T setdefault(const Key &key, const T &d = T()) {
-        if (this->count(key)) {
-            return this->at(key);
+        typename std::map<Key, T, Compare, Alloc>::iterator it =
+            this->find(key);
+
+        if (it != this->end()) {
+            return it->second;
         }
 
         this->insert(this->begin(), std::pair<Key, T>(key, d));
