@@ -210,7 +210,7 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         return a;
     }
 
-    T get(Key key, T d = T()) {
+    T get(const Key &key, const T &d = T()) {
         if (this->count(key)) {
             return this->at(key);
         }
@@ -232,7 +232,7 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         return a;
     }
 
-    T pop(Key key) {
+    T pop(const Key &key) {
         if (this->count(key)) {
             T x = std::move(this->at(key));
             this->erase(key);
@@ -242,7 +242,7 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         throw std::out_of_range("key not in dict");
     }
 
-    T pop(Key key, T d) {
+    T pop(const Key &key, const T &d) {
         if (this->count(key)) {
             T x = std::move(this->at(key));
             this->erase(key);
@@ -252,7 +252,7 @@ struct _map : std::map<Key, T, Compare, Alloc> {
         return d;
     }
 
-    T setdefault(Key key, T d = T()) {
+    T setdefault(const Key &key, const T &d = T()) {
         if (this->count(key)) {
             return this->at(key);
         }
