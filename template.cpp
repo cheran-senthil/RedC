@@ -174,10 +174,6 @@ struct Set : std::set<T, Compare, Alloc> {
         return a;
     }
 
-    bool is_disjoint(const Set<T> &other) {
-        return intersection(other) == Set<T>();
-    }
-
     void intersection_update(const Set<T> &other) {
         Set<T> a;
 
@@ -185,6 +181,10 @@ struct Set : std::set<T, Compare, Alloc> {
                               other.cend(), std::inserter(a, a.begin()));
 
         *this = a;
+    }
+
+    bool is_disjoint(const Set<T> &other) {
+        return intersection(other) == Set<T>();
     }
 
     bool issubset(const Set<T> &other) {
