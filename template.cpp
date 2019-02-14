@@ -277,22 +277,6 @@ template <class T, class Compare = std::less<T>,
 struct _set : std::set<T, Compare, Alloc> {
     using std::set<T, Compare, Alloc>::set;
 
-    bool operator<(const _set<T> &other) {
-        return issubset(other) && (other != *this);
-    }
-
-    bool operator<=(const _set<T> &other) {
-        return issubset(other);
-    }
-
-    bool operator>(const _set<T> &other) {
-        return issuperset(other) && (other != *this);
-    }
-
-    bool operator>=(const _set<T> &other) {
-        return issuperset(other);
-    }
-
     friend _set operator|(_set<T> a, const _set<T> &b) {
         a.update(b);
         return a;
