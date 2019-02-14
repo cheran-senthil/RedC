@@ -308,6 +308,16 @@ struct _set : std::set<T, Compare, Alloc> {
         return b;
     }
 
+    void intersection_update(const _set<T> &other) {
+        _set<T> b;
+
+        std::set_intersection(this->cbegin(), this->cend(), other.cbegin(),
+                              other.cend(), std::inserter(b, b.begin()));
+
+        *this = b;
+    }
+
+
     bool issubset(_set<T> &other) {
         return std::includes(other.begin(), other.end(), this->begin(),
                              this->end());
