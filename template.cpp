@@ -277,6 +277,39 @@ template <class T, class Compare = std::less<T>,
 struct _set : std::set<T, Compare, Alloc> {
     using std::set<T, Compare, Alloc>::set;
 
+    friend _set operator|(_set a, const _set &b) {
+        a.update(b);
+        return a;
+    }
+
+    _set &operator|=(const _set &a) {
+        update(a);
+        return *this;
+    }
+
+    friend _set operator&(_set a, const _set &b) { return a.intersection(b); }
+
+    _set &operator&=(const _set &a) {
+        intersection_update(a);
+        return *this;
+    }
+
+    friend _set operator-(_set a, const _set &b) { return a.difference(b); }
+
+    _set &operator-=(const _set &a) {
+        difference_update(a);
+        return *this;
+    }
+
+    friend _set operator^(_set a, const _set &b) {
+        return a.symmetric_difference(b);
+    }
+
+    _set &operator^=(const _set &a) {
+        symmetric_difference_update(a);
+        return *this;
+    }
+
     void add(const T &elem) { this->insert(elem); }
 
     template <class Container> _set<T> difference(const Container &a) {
