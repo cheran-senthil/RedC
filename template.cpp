@@ -345,6 +345,16 @@ struct _set : std::set<T, Compare, Alloc> {
         return a;
     }
 
+    void symmetric_difference_update(const _set<T> &other) {
+        _set<T> a;
+
+        std::set_symmetric_difference(this->cbegin(), this->cend(),
+                                      other.cbegin(), other.cend(),
+                                      std::inserter(a, a.begin()));
+
+        *this = a;
+    }
+
     template <class Container> void update(const Container &other) {
         this->insert(other.cbegin(), other.cend());
     }
