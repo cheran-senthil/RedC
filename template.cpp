@@ -317,7 +317,7 @@ struct _set : std::set<T, Compare, Alloc> {
         }
     }
 
-    template <class Container> void union_update(const Container &a) {
+    template <class Container> void update(const Container &a) {
         this->insert(a.cbegin(), a.cend());
     }
 };
