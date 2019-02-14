@@ -170,13 +170,14 @@ struct _vector : std::vector<T, Alloc> {
         return i;
     }
 
-    int count(const T &x) { return std::count(this->begin(), this->end(), x); }
+    void remove(const T &elem) {
+        typename std::set<T, Compare, Alloc>::iterator it =
+            this->find(elem);
 
-    void sort(bool reverse = false) {
-        if (reverse) {
-            std::sort(this->rbegin(), this->rend());
+        if (it != this->end()) {
+            this->erase(it);
         } else {
-            std::sort(this->begin(), this->end());
+            throw std::out_of_range("elem not in set");
         }
     }
 
