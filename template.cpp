@@ -285,6 +285,140 @@ struct _map : std::map<Key, T, Compare, Alloc> {
     }
 };
 
+template <class T, class Compare = std::less<T>,
+          class Alloc = std::allocator<T>>
+struct _set : std::set<T, Compare, Alloc> {
+    using std::set<T, Compare, Alloc>::set;
+
+    friend _set operator|(_set<T> a, const _set<T> &b) {
+        a.update(b);
+        return a;
+    }
+
+    _set &operator|=(const _set<T> &a) {
+        update(a);
+        return *this;
+    }
+
+    friend _set operator&(_set<T> a, const _set<T> &b) { return a.intersection(b); }
+
+    _set &operator&=(const _set<T> &a) {
+        intersection_update(a);
+        return *this;
+    }
+
+    friend _set operator-(_set<T> a, const _set<T> &b) { return a.difference(b); }
+
+    _set &operator-=(const _set<T> &a) {
+        difference_update(a);
+        return *this;
+    }
+
+    friend _set operator^(_set<T> a, const _set<T> &b) {
+        return a.symmetric_difference(b);
+    }
+
+    _set &operator^=(const _set<T> &a) {
+        symmetric_difference_update(a);
+        return *this;
+    }
+
+    void add(const T &elem) { this->insert(elem); }
+
+    template <class Container> _set<T> difference(const Container &a) {
+        _set<T> b;
+
+        std::set_difference(this->cbegin(), this->cend(), a.cbegin(), a.cend(),
+                            std::inserter(b, b.begin()));
+
+        return b;
+    }
+
+    template <class Container> void difference_update(const Container &other) {
+        _set<T> a;
+
+        std::set_difference(this->cbegin(), this->cend(), other.cbegin(),
+                            other.cend(), std::inserter(a, a.begin()));
+
+        *this = a;
+    }
+
+    void discard(const T &elem) { this->erase(elem); }
+
+    _set<T> intersection(const _set<T> &other) {
+        _set<T> a;
+
+        std::set_intersection(this->cbegin(), this->cend(), other.cbegin(),
+                              other.cend(), std::inserter(a, a.begin()));
+
+        return a;
+    }
+
+    bool is_disjoint(const _set<T> &other) {
+        return intersection(other) == _set<T>();
+    }
+
+    void intersection_update(const _set<T> &other) {
+        _set<T> a;
+
+        std::set_intersection(this->cbegin(), this->cend(), other.cbegin(),
+                              other.cend(), std::inserter(a, a.begin()));
+
+        *this = a;
+    }
+
+    bool issubset(const _set<T> &other) {
+        return std::includes(other.begin(), other.end(), this->begin(),
+                             this->end());
+    }
+
+    bool issuperset(const _set<T> &other) {
+        return std::includes(this->begin(), this->end(), other.begin(),
+                             other.end());
+    }
+
+    T pop() {
+        T a = std::move(*(this->begin()));
+        this->erase(this->begin());
+        return a;
+    }
+
+    void remove(const T &elem) {
+        typename std::set<Key, T, Compare, Alloc>::iterator it =
+            this->find(key);
+
+        if (it != this->end()) {
+            erase(it);
+        } else {
+            throw std::out_of_range("elem not in set");
+        }
+    }
+
+    _set<T> symmetric_difference(const _set<T> &other) {
+        _set<T> a;
+
+        std::set_symmetric_difference(this->cbegin(), this->cend(),
+                                      other.cbegin(), other.cend(),
+                                      std::inserter(a, a.begin()));
+
+        return a;
+    }
+
+    void symmetric_difference_update(const _set<T> &other) {
+        _set<T> a;
+
+        std::set_symmetric_difference(this->cbegin(), this->cend(),
+                                      other.cbegin(), other.cend(),
+                                      std::inserter(a, a.begin()));
+
+        *this = a;
+    }
+
+    template <class Container> void update(const Container &other) {
+        this->insert(other.cbegin(), other.cend());
+    }
+};
+
 using namespace std;
 
 string input() {
@@ -297,6 +431,7 @@ mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 #define deque _deque
 #define map _map
+#define set _set
 #define vector _vector
 
 #define complex complex<long double>
