@@ -279,6 +279,15 @@ struct _set : std::set<T, Compare, Alloc> {
 
     void add(const T &elem) { this->insert(elem); }
 
+    template <class Container> _set<T> difference(const Container &a) {
+        _set<T> b;
+
+        std::set_difference(this->cbegin(), this->cend(), a.cbegin(), a.cend(),
+                            std::inserter(b, b.begin()));
+
+        return b;
+    }
+
     void discard(const T &elem) { this->erase(elem); }
 
     bool issubset(_set<T> &other) {
