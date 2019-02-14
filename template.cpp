@@ -371,8 +371,11 @@ struct _set : std::set<T, Compare, Alloc> {
     }
 
     void remove(const T &elem) {
-        if (this->count(elem)) {
-            this->erase(elem);
+        typename std::set<Key, T, Compare, Alloc>::iterator it =
+            this->find(key);
+
+        if (it != this->end()) {
+            erase(it);
         } else {
             throw std::out_of_range("elem not in set");
         }
