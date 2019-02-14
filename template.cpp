@@ -298,6 +298,10 @@ struct _set : std::set<T, Compare, Alloc> {
             throw std::out_of_range("elem not in set");
         }
     }
+
+    template <class Container> void union_update(const Container &a) {
+        this->insert(a.cbegin(), a.cend());
+    }
 };
 
 using namespace std;
