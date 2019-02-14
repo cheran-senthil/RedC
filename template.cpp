@@ -30,31 +30,16 @@ struct Vector : std::vector<T, Alloc> {
 
     void append(const T &x) { this->push_back(x); }
 
+    Vector copy() {
+        Vector a(*this);
+        return a;
+    }
+
+    int count(const T &x) { return std::count(this->begin(), this->end(), x); }
+
     template <class Container> void extend(const Container &iterable) {
         std::vector<T, Alloc>::insert(this->end(), iterable.begin(),
                                       iterable.end());
-    }
-
-    void insert(int i, const T &x) {
-        std::vector<T, Alloc>::insert(this->begin() + i, x);
-    }
-
-    void remove(const T &x) { this->erase(this->begin() + index(x)); }
-
-    T pop(int i = -1) {
-        if (i < 0) {
-            i += this->size();
-        }
-
-        T x = std::move(this->at(i));
-
-        if (i == this->size() - 1) {
-            this->pop_back();
-        } else {
-            this->erase(this->begin() + i);
-        }
-
-        return x;
     }
 
     int index(const T &x, int start = 0, int end = 0) {
@@ -75,7 +60,25 @@ struct Vector : std::vector<T, Alloc> {
         return i;
     }
 
-    int count(const T &x) { return std::count(this->begin(), this->end(), x); }
+    void insert(int i, const T &x) {
+        std::vector<T, Alloc>::insert(this->begin() + i, x);
+    }
+
+    T pop(int i = -1) {
+        if (i < 0) {
+            i += this->size();
+        }
+
+        T x = std::move(this->at(i));
+
+        if (i == this->size() - 1) {
+            this->pop_back();
+        } else {
+            this->erase(this->begin() + i);
+        }
+
+        return x;
+    }
 
     void sort(bool reverse = false) {
         if (reverse) {
@@ -97,12 +100,9 @@ struct Vector : std::vector<T, Alloc> {
         }
     }
 
-    void reverse() { std::reverse(this->begin(), this->end()); }
+    void remove(const T &x) { this->erase(this->begin() + index(x)); }
 
-    Vector copy() {
-        Vector a(*this);
-        return a;
-    }
+    void reverse() { std::reverse(this->begin(), this->end()); }
 };
 
 template <class T, class Compare = std::less<T>,
@@ -120,7 +120,9 @@ struct Set : std::set<T, Compare, Alloc> {
         return *this;
     }
 
-    friend Set operator&(Set<T> a, const Set<T> &b) { return a.intersection(b); }
+    friend Set operator&(Set<T> a, const Set<T> &b) {
+        return a.intersection(b);
+    }
 
     Set &operator&=(const Set<T> &a) {
         intersection_update(a);
@@ -204,8 +206,7 @@ struct Set : std::set<T, Compare, Alloc> {
     }
 
     void remove(const T &elem) {
-        typename std::set<T, Compare, Alloc>::iterator it =
-            this->find(elem);
+        typename std::set<T, Compare, Alloc>::iterator it = this->find(elem);
 
         if (it != this->end()) {
             this->erase(it);
