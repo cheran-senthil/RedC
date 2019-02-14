@@ -341,6 +341,10 @@ struct _set : std::set<T, Compare, Alloc> {
         return a;
     }
 
+    bool is_disjoint(const _set<T> &other) {
+        return intersection(other) == _set<T>();
+    }
+
     void intersection_update(const _set<T> &other) {
         _set<T> a;
 
@@ -427,4 +431,9 @@ mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 main() {
     ios::sync_with_stdio(False);
     cin.tie(None);
+
+    _set<int> a = {1, 2, 3, 4};
+    _set<int> b = {5};
+
+    cout << a.is_disjoint(b) << endl;
 }
