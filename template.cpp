@@ -299,6 +299,15 @@ struct _set : std::set<T, Compare, Alloc> {
 
     void discard(const T &elem) { this->erase(elem); }
 
+    _set<T> intersection(const _set<T> &other) {
+        _set<T> b;
+
+        std::set_intersection(this->cbegin(), this->cend(), other.cbegin(),
+                              other.cend(), std::inserter(b, b.begin()));
+
+        return b;
+    }
+
     bool issubset(_set<T> &other) {
         return std::includes(other.begin(), other.end(), this->begin(),
                              this->end());
