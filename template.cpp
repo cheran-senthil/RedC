@@ -288,42 +288,41 @@ struct _set : std::set<T, Compare, Alloc> {
         return b;
     }
 
-    template <class Container> void difference_update(const Container &a) {
-        _set<T> b;
+    template <class Container> void difference_update(const Container &other) {
+        _set<T> a;
 
-        std::set_difference(this->cbegin(), this->cend(), a.cbegin(), a.cend(),
-                            std::inserter(b, b.begin()));
+        std::set_difference(this->cbegin(), this->cend(), other.cbegin(),
+                            other.cend(), std::inserter(a, a.begin()));
 
-        *this = b;
+        *this = a;
     }
 
     void discard(const T &elem) { this->erase(elem); }
 
     _set<T> intersection(const _set<T> &other) {
-        _set<T> b;
+        _set<T> a;
 
         std::set_intersection(this->cbegin(), this->cend(), other.cbegin(),
-                              other.cend(), std::inserter(b, b.begin()));
+                              other.cend(), std::inserter(a, a.begin()));
 
-        return b;
+        return a;
     }
 
     void intersection_update(const _set<T> &other) {
-        _set<T> b;
+        _set<T> a;
 
         std::set_intersection(this->cbegin(), this->cend(), other.cbegin(),
-                              other.cend(), std::inserter(b, b.begin()));
+                              other.cend(), std::inserter(a, a.begin()));
 
-        *this = b;
+        *this = a;
     }
 
-
-    bool issubset(_set<T> &other) {
+    bool issubset(const _set<T> &other) {
         return std::includes(other.begin(), other.end(), this->begin(),
                              this->end());
     }
 
-    bool issuperset(_set<T> &other) {
+    bool issuperset(const _set<T> &other) {
         return std::includes(this->begin(), this->end(), other->begin(),
                              other->end());
     }
@@ -336,8 +335,8 @@ struct _set : std::set<T, Compare, Alloc> {
         }
     }
 
-    template <class Container> void update(const Container &a) {
-        this->insert(a.cbegin(), a.cend());
+    template <class Container> void update(const Container &other) {
+        this->insert(other.cbegin(), other.cend());
     }
 };
 
