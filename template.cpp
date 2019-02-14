@@ -360,6 +360,12 @@ struct _set : std::set<T, Compare, Alloc> {
                              other->end());
     }
 
+    T pop() {
+        T a = std::move(*(this->begin()));
+        this->erase(this->begin());
+        return a;
+    }
+
     void remove(const T &elem) {
         if (this->count(elem)) {
             this->erase(elem);
