@@ -431,6 +431,7 @@ mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 #define deque _deque
 #define map _map
+#define set _set
 #define vector _vector
 
 #define complex complex<long double>
