@@ -277,35 +277,51 @@ template <class T, class Compare = std::less<T>,
 struct _set : std::set<T, Compare, Alloc> {
     using std::set<T, Compare, Alloc>::set;
 
-    friend _set operator|(_set a, const _set &b) {
+    bool operator<(const _set<T> &other) {
+        return issubset(other) && (other != *this);
+    }
+
+    bool operator<=(const _set<T> &other) {
+        return issubset(other);
+    }
+
+    bool operator>(const _set<T> &other) {
+        return issuperset(other) && (other != *this);
+    }
+
+    bool operator>=(const _set<T> &other) {
+        return issuperset(other);
+    }
+
+    friend _set operator|(_set<T> a, const _set<T> &b) {
         a.update(b);
         return a;
     }
 
-    _set &operator|=(const _set &a) {
+    _set &operator|=(const _set<T> &a) {
         update(a);
         return *this;
     }
 
-    friend _set operator&(_set a, const _set &b) { return a.intersection(b); }
+    friend _set operator&(_set<T> a, const _set<T> &b) { return a.intersection(b); }
 
-    _set &operator&=(const _set &a) {
+    _set &operator&=(const _set<T> &a) {
         intersection_update(a);
         return *this;
     }
 
-    friend _set operator-(_set a, const _set &b) { return a.difference(b); }
+    friend _set operator-(_set<T> a, const _set<T> &b) { return a.difference(b); }
 
-    _set &operator-=(const _set &a) {
+    _set &operator-=(const _set<T> &a) {
         difference_update(a);
         return *this;
     }
 
-    friend _set operator^(_set a, const _set &b) {
+    friend _set operator^(_set<T> a, const _set<T> &b) {
         return a.symmetric_difference(b);
     }
 
-    _set &operator^=(const _set &a) {
+    _set &operator^=(const _set<T> &a) {
         symmetric_difference_update(a);
         return *this;
     }
@@ -360,8 +376,8 @@ struct _set : std::set<T, Compare, Alloc> {
     }
 
     bool issuperset(const _set<T> &other) {
-        return std::includes(this->begin(), this->end(), other->begin(),
-                             other->end());
+        return std::includes(this->begin(), this->end(), other.begin(),
+                             other.end());
     }
 
     T pop() {
@@ -431,9 +447,4 @@ mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 main() {
     ios::sync_with_stdio(False);
     cin.tie(None);
-
-    _set<int> a = {1, 2, 3, 4};
-    _set<int> b = {5};
-
-    cout << a.is_disjoint(b) << endl;
 }
