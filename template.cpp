@@ -176,12 +176,13 @@ struct Set : std::set<T, Compare, Alloc> {
 
     template <class Container>
     void intersection_update(const Container &other) {
-        for (typename Container::iterator I = this->begin();
-             I != this->end();) {
-            const auto &E = *I;
-            ++I;
-            if (!other.count(E))
-                this->erase(E);
+        for (auto it = this->begin(); it != this->end();) {
+            auto e = other.find(*it);
+            if (e == other.end()) {
+                it = this->erase(it);
+            } else {
+                it++;
+            }
         }
     }
 
