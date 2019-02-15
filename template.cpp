@@ -174,13 +174,15 @@ struct Set : std::set<T, Compare, Alloc> {
         return a;
     }
 
-    void intersection_update(const Set<T> &other) {
-        Set<T> a;
-
-        std::set_intersection(this->cbegin(), this->cend(), other.cbegin(),
-                              other.cend(), std::inserter(a, a.begin()));
-
-        *this = a;
+    template <class Container>
+    void intersection_update(const Container &other) {
+        for (typename Container::iterator I = this->begin();
+             I != this->end();) {
+            const auto &E = *I;
+            ++I;
+            if (!other.count(E))
+                this->erase(E);
+        }
     }
 
     bool is_disjoint(const Set<T> &other) {
