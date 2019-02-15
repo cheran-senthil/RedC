@@ -157,12 +157,10 @@ struct Set : std::set<T, Compare, Alloc> {
     }
 
     template <class Container> void difference_update(const Container &other) {
-        Set<T> a;
-
-        std::set_difference(this->cbegin(), this->cend(), other.cbegin(),
-                            other.cend(), std::inserter(a, a.begin()));
-
-        *this = a;
+        for (typename Container::const_iterator SI = other.begin(),
+                                                SE = other.end();
+             SI != SE; ++SI)
+            this->erase(*SI);
     }
 
     void discard(const T &elem) { this->erase(elem); }
