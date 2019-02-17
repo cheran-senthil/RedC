@@ -287,7 +287,7 @@ struct Map : std::map<Key, T, Compare, Alloc> {
 
         if (it != this->end()) {
             T x = std::move(it->second);
-            erase(it);
+            this->erase(it);
             return x;
         }
 
@@ -300,7 +300,7 @@ struct Map : std::map<Key, T, Compare, Alloc> {
 
         if (it != this->end()) {
             T x = std::move(it->second);
-            erase(it);
+            this->erase(it);
             return x;
         }
 
