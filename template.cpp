@@ -262,7 +262,7 @@ struct Map : std::map<Key, T, Compare, Alloc> {
     }
 
     Vector<std::pair<const Key, T>> items() {
-        Vector<Key> a;
+        Vector<std::pair<const Key, T>> a;
 
         std::transform(
             this->begin(), this->end(), std::back_inserter(a),
