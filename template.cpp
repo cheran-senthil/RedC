@@ -425,13 +425,45 @@ struct Deque : std::deque<T, Alloc> {
     }
 };
 
-using namespace std;
-
-string input() {
-    string value;
-    getline(cin >> ws, value);
+std::string input() {
+    std::string value;
+    std::getline(std::cin >> std::ws, value);
     return value;
 }
+
+template <class Container, class Function>
+auto Transform(Function fun, const Container &cont)
+    -> Vector<decltype(fun(*cont.begin()))> {
+    Vector<decltype(fun(*cont.begin()))> ret;
+    ret.reserve(cont.size());
+
+    for (const auto &v : cont) {
+        ret.push_back(fun(v));
+    }
+
+    return ret;
+}
+
+Vector<std::string> split(std::string s) {
+    Vector<std::string> a;
+    std::string word;
+
+    for (char c : s) {
+        if (c == ' ') {
+            a.push_back(word);
+            word.clear();
+        } else {
+            word.push_back(c);
+        }
+    }
+    a.push_back(word);
+
+    return a;
+}
+
+int Stoi(const std::string &str) { return std::stoi(str); }
+
+using namespace std;
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
