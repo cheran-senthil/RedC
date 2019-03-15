@@ -1,4 +1,3 @@
-#include <math.h>
 #include <tuple>
 #include <vector>
 
@@ -24,7 +23,7 @@ vector<bool> get_primes(int n) {
     vector<bool> sieve(n / 3 + flag, true);
 
     int max_i = isqrt(n) / 3;
-    for (i = 1; i <= max_i; ++i) {
+    for (i = 1; i <= max_i; ++i)
         if (sieve[i]) {
             k = (3 * i + 1) | 1;
             for (j = (k * k) / 3; j < (n / 3) + flag; j += 2 * k)
@@ -32,7 +31,6 @@ vector<bool> get_primes(int n) {
             for (j = (k * (k - 2 * (i & 1) + 4)) / 3; j < (n / 3) + flag; j += 2 * k)
                 sieve[j] = false;
         }
-    }
 
     return sieve;
 }
