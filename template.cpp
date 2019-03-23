@@ -28,14 +28,13 @@ template <typename Key> using UnorderedSet = gp_hash_table<Key, null_type, chash
 template <typename Key, typename Mapped> using UnorderedMap = gp_hash_table<Key, Mapped, chash>;
 #define unordered_map UnorderedMap
 
-template <class T>
-using ordered_set = tree<T, ...>
+template <class T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #pragma endregion
 
 #pragma region random
 
-    mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 template <typename T> T randint(T a, T b) { return uniform_int_distribution<T>(a, b)(rng); }
 
 #pragma endregion
