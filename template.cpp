@@ -9,8 +9,9 @@ using namespace std;
 using namespace __gnu_pbds;
 
 struct chash {
-    const int RANDOM =
-        (long long)(make_unique<char>().get()) ^ chrono::high_resolution_clock::now().time_since_epoch().count();
+    const unsigned long long RANDOM =
+        (unsigned long long)(make_unique<char>().get()) ^
+        chrono::steady_clock::now().time_since_epoch().count();
 
     static unsigned long long hash_f(unsigned long long x) {
         x += 0x9e3779b97f4a7c15;
@@ -18,24 +19,37 @@ struct chash {
         x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
         return x ^ (x >> 31);
     }
-    static unsigned hash_combine(unsigned a, unsigned b) { return a * 31 + b; }
-    int operator()(int x) const { return hash_f(x) ^ RANDOM; }
+
+    static unsigned long long hash_combine(unsigned long long a,
+                                           unsigned long long b) {
+        return a * 31 + b;
+    }
+
+    unsigned long operator()(unsigned long long x) const {
+        return hash_f(x) ^ RANDOM;
+    }
 };
 
-template <typename Key> using UnorderedSet = gp_hash_table<Key, null_type, chash>;
+template <typename Key>
+using UnorderedSet = gp_hash_table<Key, null_type, chash>;
 #define unordered_set UnorderedSet
 
-template <typename Key, typename Mapped> using UnorderedMap = gp_hash_table<Key, Mapped, chash>;
+template <typename Key, typename Mapped>
+using UnorderedMap = gp_hash_table<Key, Mapped, chash>;
 #define unordered_map UnorderedMap
 
-template <class T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <class T>
+using ordered_set =
+    tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #pragma endregion
 
 #pragma region random
 
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-template <typename T> T randint(T a, T b) { return uniform_int_distribution<T>(a, b)(rng); }
+template <typename T> T randint(T a, T b) {
+    return uniform_int_distribution<T>(a, b)(rng);
+}
 
 #pragma endregion
 
