@@ -10,9 +10,9 @@ template <typename T> T randint(T a, T b) { return uniform_int_distribution<T>(a
 #pragma endregion
 
 #pragma region debug
-string to_string(string s) { return '"' + s + '"'; }
+string to_string(char c) { return {39, c, 39}; }
 
-string to_string(const char *s) { return to_string((string)s); }
+string to_string(string s) { return "\"" + s + "\""; }
 
 string to_string(bool b) { return (b ? "true" : "false"); }
 
