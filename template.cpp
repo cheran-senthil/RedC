@@ -10,11 +10,11 @@ template <typename T> T randint(T a, T b) { return uniform_int_distribution<T>(a
 #pragma endregion
 
 #pragma region debug
+string to_string(bool b) { return b ? "true" : "false"; }
+
 string to_string(char c) { return {39, c, 39}; }
 
 string to_string(string s) { return "\"" + s + "\""; }
-
-string to_string(bool b) { return (b ? "true" : "false"); }
 
 template <typename A, typename B> string to_string(pair<A, B> p) {
     return "(" + to_string(p.first) + ", " + to_string(p.second) + ")";
