@@ -49,4 +49,5 @@ template <typename Head, typename... Tail> void debug_out(Head H, Tail... T) {
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    cout << fixed << setprecision(16);
 }
