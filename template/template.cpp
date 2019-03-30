@@ -1,5 +1,3 @@
-#pragma region template
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -9,12 +7,34 @@ template <typename T> T randint(T a, T b) { return uniform_int_distribution<T>(a
 
 #pragma endregion
 
+#pragma region getnum
+inline int getchar() {
+#ifdef _WIN32
+    return _getchar_nolock();
+#else
+    return getchar_unlocked();
+#endif
+}
+
+int getnum() {
+    int ret = 0, chr = getchar();
+
+    while (isspace(chr))
+        chr = getchar();
+    while (isdigit(chr))
+        ret = 10 * ret + chr - '0', chr = getchar();
+
+    return ret;
+}
+
+#pragma endregion
+
 #pragma region debug
-string to_string(bool b) { return b ? "true" : "false"; }
+string to_string(string s) { return '"' + s + '"'; }
 
-string to_string(char c) { return {39, c, 39}; }
+string to_string(const char *s) { return to_string((string)s); }
 
-string to_string(string s) { return "\"" + s + "\""; }
+string to_string(bool b) { return (b ? "true" : "false"); }
 
 template <typename A, typename B> string to_string(pair<A, B> p) {
     return "(" + to_string(p.first) + ", " + to_string(p.second) + ")";
@@ -41,8 +61,6 @@ template <typename Head, typename... Tail> void debug_out(Head H, Tail... T) {
 }
 
 #define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
-
-#pragma endregion
 
 #pragma endregion
 
