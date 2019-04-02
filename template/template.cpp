@@ -26,7 +26,7 @@ template <class T, class... S> inline void getnum(T &a, S &... b) {
     if (chr == '-')
         positive = false, chr = getchar();
 
-    if (isdigit(c)) {
+    if (isdigit(chr)) {
         a = chr - '0';
         while (isdigit(chr = getchar()))
             a = a * 10 + chr - '0';
@@ -37,7 +37,7 @@ template <class T, class... S> inline void getnum(T &a, S &... b) {
     if (chr == '.') {
         uint64_t dec_part = 0;
         int dec_len = 0;
-        while (isdigit(c = getchar()))
+        while (isdigit(chr = getchar()))
             dec_part = dec_part * 10 + chr - '0', ++dec_len;
         a += dec_part / pow(10, dec_len);
     }
