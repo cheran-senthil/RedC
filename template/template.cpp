@@ -1,13 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#pragma region random
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-template <typename T> T randint(T a, T b) { return uniform_int_distribution<T>(a, b)(rng); }
-
-#pragma endregion
-
-#pragma region getnum
 int getchar() {
 #ifdef _WIN32
     return _getchar_nolock();
@@ -46,9 +39,6 @@ template <class T, class... S> inline void getnum(T &a, S &... b) {
     getnum(b...);
 }
 
-#pragma endregion
-
-#pragma region debug
 string to_string(string s) { return '"' + s + '"'; }
 
 string to_string(const char *s) { return to_string((string)s); }
@@ -80,8 +70,6 @@ template <typename Head, typename... Tail> void debug_out(Head H, Tail... T) {
 }
 
 #define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
-
-#pragma endregion
 
 int main() {
     ios::sync_with_stdio(false);
