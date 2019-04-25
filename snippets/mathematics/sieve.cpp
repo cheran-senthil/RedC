@@ -1,26 +1,22 @@
 #include <tuple>
 #include <vector>
 
-using namespace std;
-
-int isqrt(int a) {
-    if (a < 2)
-        return a;
-
-    int c = 1;
-    int d = (c + a / c) / 2;
-    int e = (d + a / d) / 2;
-
-    while ((c != d) && (c != e))
-        tie(c, d, e) = tuple{d, e, (e + a / e) / 2};
-
-    return min(d, e);
+int isqrt(int n) {
+    if (n == 0)
+        return 0;
+    int u = n, s = n + 1, t;
+    while (u < s) {
+        s = u;
+        t = s + n / s;
+        u = t / 2;
+    }
+    return s;
 }
 
-vector<bool> get_primes(int n) {
+std::vector<bool> get_primes(int n) {
     int i, j, k;
     bool flag = n % 6 == 2;
-    vector<bool> sieve(n / 3 + flag, true);
+    std::vector<bool> sieve(n / 3 + flag, true);
 
     int max_i = isqrt(n) / 3;
     for (i = 1; i <= max_i; ++i)
