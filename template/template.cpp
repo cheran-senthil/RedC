@@ -42,14 +42,16 @@ template <typename T, typename... ArgTypes> void print(const T &t, ArgTypes cons
     print(args...);
 }
 
+#define debug(...) cout << "[" << #__VA_ARGS__ << "]: ", print(__VA_ARGS__)
+
 void solve() {}
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    cout << fixed << setprecision(16);
     cout << boolalpha;
+    cout << fixed << setprecision(16);
 
     solve();
     return 0;
