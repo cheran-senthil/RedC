@@ -1,12 +1,18 @@
+/*
 #pragma GCC optimize("Ofast")
 #pragma GCC target("avx,avx2,fma")
 #pragma GCC optimize("unroll-loops")
+*/
 
 #include <bits/stdc++.h>
 using namespace std;
 
+#pragma region print
+
 string Sep = " ";
 string End = "\n";
+
+template <typename T, typename C> vector<T> to_vector(const C &c) { return vector<T>(c.begin(), c.end()); }
 
 template <typename T1, typename T2> ostream &operator<<(ostream &os, const pair<T1, T2> &p) {
     os << p.first << Sep << p.second;
@@ -43,6 +49,8 @@ template <typename T, typename... ArgTypes> void print(const T &t, ArgTypes cons
 }
 
 #define debug(...) cout << "[" << #__VA_ARGS__ << "]: ", print(__VA_ARGS__)
+
+#pragma endregion
 
 void solve() {}
 
