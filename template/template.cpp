@@ -12,17 +12,22 @@ using namespace std;
 string Sep = " ";
 string End = "\n";
 
-template <typename T, typename C> vector<T> to_vector(const C &c) { return vector<T>(c.begin(), c.end()); }
+template <typename T, typename C>
+vector<T> to_vector(const C &c) { return vector<T>(c.begin(), c.end()); }
 
-template <typename T1, typename T2> ostream &operator<<(ostream &os, const pair<T1, T2> &p) {
+template <typename T1, typename T2>
+ostream &operator<<(ostream &os, const pair<T1, T2> &p)
+{
     os << p.first << Sep << p.second;
     return os;
 }
 
 template <typename T, size_t arr_size, typename = enable_if_t<!is_same<T, char>::value>>
-ostream &operator<<(ostream &os, const T (&arr)[arr_size]) {
+ostream &operator<<(ostream &os, const T (&arr)[arr_size])
+{
     bool at_start = true;
-    for (const auto &x : arr) {
+    for (const auto &x : arr)
+    {
         if (!at_start)
             os << Sep;
         os << x;
@@ -31,9 +36,12 @@ ostream &operator<<(ostream &os, const T (&arr)[arr_size]) {
     return os;
 }
 
-template <typename T> ostream &operator<<(ostream &os, const vector<T> &v) {
+template <typename T>
+ostream &operator<<(ostream &os, const vector<T> &v)
+{
     bool at_start = true;
-    for (const auto &x : v) {
+    for (const auto &x : v)
+    {
         if (!at_start)
             os << Sep;
         os << x;
@@ -42,8 +50,11 @@ template <typename T> ostream &operator<<(ostream &os, const vector<T> &v) {
     return os;
 }
 
-template <typename T> void print(const T &t) { cout << t << End; }
-template <typename T, typename... ArgTypes> void print(const T &t, ArgTypes const &... args) {
+template <typename T>
+void print(const T &t) { cout << t << End; }
+template <typename T, typename... ArgTypes>
+void print(const T &t, ArgTypes const &... args)
+{
     cout << t << Sep;
     print(args...);
 }
@@ -52,9 +63,12 @@ template <typename T, typename... ArgTypes> void print(const T &t, ArgTypes cons
 
 #pragma endregion
 
-void solve() {}
+void solve()
+{
+}
 
-int main() {
+int main()
+{
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
