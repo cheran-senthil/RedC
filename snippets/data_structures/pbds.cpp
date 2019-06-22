@@ -19,13 +19,16 @@ struct chash {
     int operator()(int x) const { return hash_f(x) ^ RANDOM; }
 };
 
-template <typename Key> using UnorderedSet = gp_hash_table<Key, null_type, chash>;
+template <typename Key>
+using UnorderedSet = gp_hash_table<Key, null_type, chash>;
 #define unordered_set UnorderedSet
 
-template <typename Key, typename Mapped> using UnorderedMap = gp_hash_table<Key, Mapped, chash>;
+template <typename Key, typename Mapped>
+using UnorderedMap = gp_hash_table<Key, Mapped, chash>;
 #define unordered_map UnorderedMap
 
-template <class T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <class T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 template <typename T>
 using ordered_multiset =
