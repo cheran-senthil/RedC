@@ -24,11 +24,16 @@ struct segment_tree {
             m_data[index] = m_func(m_data[2 * index], m_data[2 * index + 1]);
     }
 
+    T& operator [](int index) {
+        return m_data[m_size + index];
+    }
+
     int bound(const T &value, const F &cmp) {
         if (!cmp(value, m_data[1]))
             return -1;
 
-        for (int i = 2; i < m_size; i *= 2)
+        int i = 2;
+        for (; i < m_size; i *= 2)
             if (cmp(value, m_data[i + 1]))
                 ++i;
         return i - m_size;
