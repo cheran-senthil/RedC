@@ -1,5 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <stdio.h>
 
 int getchar() {
 #ifdef _WIN32
@@ -10,7 +9,8 @@ int getchar() {
 }
 
 void getnum() {}
-template <class T, class... S> inline void getnum(T &a, S &... b) {
+template <class T, class... S>
+inline void getnum(T &a, S &... b) {
     int chr = getchar();
     while (isspace(chr))
         chr = getchar();
